@@ -1,0 +1,49 @@
+{% extends 'flatpages/default.html' %}
+
+{% block content %}
+    <h1>Профиль пользователя: {{ user.username }}</h1>
+
+    {% if user.profile.avatar %}
+        <img src="{{ user.profile.avatar.url }}" alt="Аватар пользователя">
+    {% endif %}
+
+    <h2>Мои объявления</h2>
+    {% if posts %}
+        <ul>
+            {% for post in posts %}
+                <li>
+                    <a href="{% url 'post_detail' post.pk %}">{{ post.title }}</a>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>У вас пока нет объявлений.</p>
+    {% endif %}
+
+    <h2>Мои отклики</h2>
+    {% if replies %}
+        <ul>
+            {% for reply in replies %}
+                <li>
+                    <a href="{% url 'post_detail' reply.post.pk %}">{{ reply.content }}</a>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>У вас пока нет откликов.</p>
+    {% endif %}
+
+    <h2>Мои подписки</h2>
+    {% if subscriptions %}
+        <ul>
+            {% for subscription in subscriptions %}
+                <li>
+                    {{ subscription.newsletter.subject }}
+                    <a href="{% url 'unsubscribe' subscription.pk %}">Отписаться</a>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>У вас пока нет подписок.</p>
+    {% endif %}
+{% endblock %}

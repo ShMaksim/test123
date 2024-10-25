@@ -1,0 +1,18 @@
+{% extends 'flatpages/default.html' %}
+
+{% block content %}
+    <h1>Управление подписками</h1>
+
+    {% if subscriptions %}
+        <ul>
+            {% for subscription in subscriptions %}
+                <li>
+                    {{ subscription.newsletter.subject }}
+                    <a href="{% url 'unsubscribe' subscription.pk %}">Отписаться</a>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>У вас пока нет подписок.</p>
+    {% endif %}
+{% endblock %}

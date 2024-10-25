@@ -1,0 +1,15 @@
+{% block content %}
+    <h1>Фильтрация откликов</h1>
+
+    {% if replies %}
+        <ul>
+            {% for reply in replies %}
+                <li>
+                    <a href="{% url 'post_detail' reply.post.pk %}">{{ reply.content }}</a> 
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>Нет откликов, соответствующих критериям фильтрации.</p>
+    {% endif %}
+{% endblock %}

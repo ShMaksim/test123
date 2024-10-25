@@ -1,0 +1,14 @@
+{% extends 'flatpages/default.html' %}
+
+{% block content %}
+<html>
+<head>
+    <title>Новый отклик</title>
+</head>
+<body>
+    <p>Здравствуйте, {{ author.username }}!</p>
+    <p>Пользователь {{ reply_author.username }} оставил отклик на ваше объявление "<a href="http://127.0.0.1:8000/post/{{ post.id }}">{{ post.title }}</a>":</p>
+    <p>{{ reply.content }}</p>
+</body>
+</html>
+{% endblock content %}

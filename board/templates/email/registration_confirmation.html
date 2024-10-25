@@ -1,0 +1,14 @@
+{% extends 'flatpages/default.html' %}
+
+{% block content %}
+<html>
+<head>
+    <title>Верификация аккаунта</title>
+</head>
+<body>
+    <p>Здравствуйте, {{ user.username }}!</p>
+    <p>Для завершения регистрации перейдите по ссылке:</p>
+    <a href="http://127.0.0.1:8000/post/verify/{{ registration_code }}">http://127.0.0.1:8000/post/verify/{{ registration_code }}</a>
+</body>
+</html>
+{% endblock content %}

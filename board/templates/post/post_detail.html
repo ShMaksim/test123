@@ -1,0 +1,50 @@
+{% extends 'flatpages/default.html' %}
+
+{% block content %}
+    <h2>{{ post.title }}</h2>
+    <p>Автор: {{ post.author.username }}</p>
+    <p>Категория: {{ post.get_category_display }}</p>
+    <p>Дата создания: {{ post.created_at }}</p>
+{{ post.content | safe }}
+
+{% if post.image1 %}
+    <img src="{{ post.image1.url }}" alt="Image 1">
+{% endif %}
+
+{% if post.image2 %}
+    <img src="{{ post.image2.url }}" alt="Image 2">
+{% endif %}
+
+{% if post.video1 %}
+    <iframe width="560" height="315" src="{{ post.video1 }}"
+            title="YouTube video player" frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen>
+    </iframe>
+{% endif %}
+
+{% if post.video2 %}
+    <iframe width="560" height="315" src="{{ post.video2 }}"
+            title="YouTube video player" frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen>
+    </iframe>
+{% endif %}
+
+    <h3>Отклики</h3>
+{% for reply in replies %}
+    <p><strong>{{ reply.author.username }}</strong>: {{ reply.content }}</p>
+{% endfor %}
+
+{% if user.is_authenticated %}
+    <form method="post" action="{% url 'create_reply' pk=post.pk %}">
+{% csrf_token %}
+{{ reply_form.as_p }}
+    <button type="submit">Отправить отклик</button>
+    </form>
+{% else %}
+    <p>Чтобы оставить отклик, <a href="{% url 'login' %}">авторизуйтесь</a>.</p>
+{% endif %}
+
+{% if user == post.author %}
+    <a href="{% url 'edit_post' pk=post.pk %}">Редактировать</a>
+{% endif %}
+{% endblock content %}

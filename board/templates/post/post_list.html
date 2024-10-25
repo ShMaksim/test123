@@ -1,0 +1,25 @@
+{% extends 'flatpages/default.html' %}
+
+{% block content %}
+    <h1>Объявления</h1>
+    {% if user.is_authenticated %}
+        <a href="{% url 'create_post' %}">Создать объявление</a>
+    {% else %}
+        <a href="{% url 'yandex_login' %}" class="btn btn-primary">Войти через Яндекс</a>
+    {% endif %}
+
+    <div>
+        <strong>Категории:</strong>
+        <a href="{% url 'post_list' %}">Все</a>
+        {% for category_value, category_name in categories %}
+            <a href="{% url 'post_list' %}?category={{ category_value }}">{{ category_name }}</a>
+        {% endfor %}
+    </div>
+    {% for post in posts %}
+        <h2><a href="{% url 'post_detail' pk=post.pk %}">{{ post.title }}</a></h2>
+        <p>Автор: {{ post.author.username }}</p>
+        <p>Категория: {{ post.get_category_display }}</p>
+        <p>Дата создания: {{ post.created_at }}</p>
+        <hr>
+    {% endfor %}
+{% endblock content %}

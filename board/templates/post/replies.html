@@ -1,0 +1,18 @@
+{% extends 'flatpages/default.html' %}
+
+{% block content %}
+    <h1>Мои отклики</h1>
+
+    {% if replies %}
+        <ul>
+            {% for reply in replies %}
+                <li>
+                    <a href="{% url 'post_detail' reply.post.pk %}">{{ reply.content }}</a>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>У вас пока нет откликов.</p>
+    {% endif %}
+    <a href="{% url 'filter_replies' %}">Фильтровать отклики</a>
+{% endblock %}
